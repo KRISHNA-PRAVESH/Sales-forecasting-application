@@ -1,8 +1,29 @@
 
-<form action="" #obj = 'ngForm'>
-    
-    <input name="name" ngModel> <br> <br>
-    <input type="file" ngModel> <br> <br>
-    <input name="period">
+<form action="" #obj = 'ngForm' (submit)="fetch(obj)">
+  <label for="csv">Upload your CSV File: </label> <br>
+  <input type="file" class="fileInput" name="csv" (change)="onFileSelected($event)" #fileUpload >
+
+  <div class="file-upload">
+   {{fileName || "No file uploaded yet."}}
+    <button mat-mini-fab color="primary" class="upload-btn"
+         (click)="fileUpload.click()"> 
+         <!-- The click event handler triggers a click event for the actual file upload section above -->
+         <mat-icon>attach_file</mat-icon>
+    </button>
+   </div>
+
+    <label for="periodicity">Enter Periodicity:&nbsp;</label>
+    <input type="radio" value="months" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Months
+    <input type="radio" value="weeks" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Weeks
+    <input type="radio" value="days" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Days
+ 
+  <br> <br>
+  <mat-form-field>
+    <mat-label>Enter Number of {{val}}</mat-label>
+    <input name="number" matInput ngModel>
+  </mat-form-field>
+  <br>
+
+    <button mat-raised-button color="primary" type="submit"> Submit </button>
 
 </form>

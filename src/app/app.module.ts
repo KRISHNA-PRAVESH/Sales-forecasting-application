@@ -11,6 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card'; 
 import {MatButtonModule } from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
 
 // for ng form
 import { FormsModule } from '@angular/forms';
@@ -32,7 +33,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatButtonModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
+    
 
    
   ],

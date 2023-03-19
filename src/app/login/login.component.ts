@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
     }));
 
     if(isPresent){
-      this.openSnackBarTop("login successfull","ok",1000,"blue-snackbar");
+      this.openSnackBarTop(`Hi, ${username}`,"ok",1000,"blue-snackbar");
       console.log("here");
     
       //navigating the to the dashboard
