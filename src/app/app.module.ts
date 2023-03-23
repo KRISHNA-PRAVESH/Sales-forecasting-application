@@ -42,7 +42,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
    
   ],
-  providers: [],
+  providers: [LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

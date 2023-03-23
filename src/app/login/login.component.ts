@@ -2,7 +2,6 @@ import { Component,OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { delay } from 'rxjs';
 
 
 
@@ -14,6 +13,7 @@ import { delay } from 'rxjs';
 export class LoginComponent implements OnInit {
 
   private users:any;
+  isLoggedIn:boolean = false;
   constructor(private router: Router,private snackBar: MatSnackBar){
 
   }
@@ -66,8 +66,9 @@ export class LoginComponent implements OnInit {
     }));
 
     if(isPresent){
+      this.isLoggedIn= true;
       this.openSnackBarTop(`Hi, ${username}`,"",1000,"blue-snackbar");
-      console.log("here");
+      
     
       //navigating the to the dashboard
       this.router.navigate(['dashboard']); //navigate() accepts an array of type any as its parameters, 
