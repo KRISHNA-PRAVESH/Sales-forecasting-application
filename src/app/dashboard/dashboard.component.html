@@ -1,5 +1,11 @@
 
-<form action="" method="post" enctype="multipart/form-data" #data = 'ngForm' >
+<form class="form" action="" method="post" enctype="multipart/form-data" #data = 'ngForm' >
+  <div class="logout-btn">
+    
+    <button mat-mini-fab color="accent" (click)="logout()">
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
+   </div>
   <label for="csv">Upload your CSV File: </label> <br>
     <input type="file" class="fileInput" ngModel name="csvFile" (change)="onFileSelected($event)" #upload>
 
@@ -10,6 +16,8 @@
          <mat-icon>attach_file</mat-icon>
     </button>
    </div>
+   
+   
 
     <label for="periodicity">Enter Periodicity:&nbsp;</label>
     <input type="radio" value="months" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Months
@@ -24,5 +32,7 @@
   <br>
 
     <button mat-raised-button color="primary" type="submit" (click)="fetch(data)"> Submit </button>
-
+   
+    
 </form>
+
