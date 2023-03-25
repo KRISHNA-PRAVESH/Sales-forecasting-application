@@ -19,6 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { SignupComponent } from './signup/signup.component';
     BrowserAnimationsModule,
     FormsModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    NgChartsModule
     
 
    

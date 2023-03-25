@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../auth/auth-service.service';
-
+// import { ChartConfiguration,ChartOptions, ChartType } from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,12 +24,16 @@ export class DashboardComponent implements OnInit{
   formData:any;
   
  
-  constructor(private http:HttpClient,private snackBar:MatSnackBar,private router:Router,private authService:AuthServiceService){
+  constructor(private http:HttpClient,
+    private snackBar:MatSnackBar,
+    private router:Router,
+    private authService:AuthServiceService,
+    ){
 
   }
 
   ngOnInit(): void {
-   
+    
   }
    fetch(data:NgForm){
     this.periodicity = data.value.periodicity;
@@ -88,6 +93,41 @@ export class DashboardComponent implements OnInit{
     this.router.navigate(['login'])
   }
   
-  
 
+  //Chart.js  
+  public chart:any;
+  salesData:string[] =['467','576', '572', '79', '92',
+            '200', '573', '576']
+  
+  profitData:string[] = ['542', '542', '536', '327', '17',
+  '0.00', '538', '541']
+  createChart(){
+    this.chart = new Chart("MyChart", {
+      type: 'line', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
+								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
+	       datasets: [
+          {
+            label: "Sales",
+            data: this.salesData,
+            backgroundColor: 'red'
+          },
+          {
+            label: "Profit",
+            data: this.profitData,
+            backgroundColor: '#62CDFF'
+          }  
+        ]
+      },
+      options: {
+        aspectRatio:2.5
+      }
+      
+    });
+  }
+
+  
+ 
 }

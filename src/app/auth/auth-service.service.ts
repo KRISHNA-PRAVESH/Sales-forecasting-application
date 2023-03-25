@@ -38,7 +38,7 @@ export class AuthServiceService {
           }
         },
         complete:()=>{
-          this.openSnackBarTop(`Hi, ${username}`,"",1000,"blue-snackbar");
+          this.openSnackBarTop(`Hi, ${username}👋`,"",1000,"blue-snackbar");
           this.router.navigate(['dashboard'])
         }
       })
