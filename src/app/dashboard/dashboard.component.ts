@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit{
   num:any;
   url:any;
   formData:any;
+  dataset:any;
   
  
   constructor(private http:HttpClient,
@@ -33,9 +34,21 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    
+     
+
   }
-   fetch(data:NgForm){
+  
+  async fetchDataset(){
+    this.url = "http://localhost:5000/dataset"
+    const response =  await fetch(this.url,{method:'GET'});
+    this.dataset = await response.json();
+    this.salesData = this.dataset.salesData; //if await was not used.. this would be initialised an undefined value. because the data
+                                             //have not been fetched yet.
+    this.profitData = this.dataset.profitData; 
+  }
+ 
+  dataResponse:any;
+  fetch(data:NgForm){
     this.periodicity = data.value.periodicity;
     this.num = data.value.number;
     // Send the post request only if the file exists
@@ -54,10 +67,8 @@ export class DashboardComponent implements OnInit{
     else{
       this.snackBar.open("Please fill all the fields","ok",{duration:1000,verticalPosition:'top',horizontalPosition:'center',panelClass:['red-snackbar']})
     }
-
     
   }
- 
 
   onFileSelected(f:any){
     this.fileName = f.target.files[0].name;
@@ -96,13 +107,12 @@ export class DashboardComponent implements OnInit{
 
   //Chart.js  
   public chart:any;
-  salesData:string[] =['467','576', '572', '79', '92',
-            '200', '573', '576']
-  
-  profitData:string[] = ['542', '542', '536', '327', '17',
-  '0.00', '538', '541']
-  createChart(){
-    this.chart = new Chart("MyChart", {
+  salesData:any;
+  profitData:any;
+  async createChart(){
+    await this.fetchDataset(); //Waiting till the data is fetched from server
+    console.log(this.salesData);
+    this.chart = new Chart("chart", {
       type: 'line', //this denotes tha type of chart
 
       data: {// values on X-Axis
