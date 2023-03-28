@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
 import { NgChartsModule } from 'ng2-charts';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { NgChartsModule } from 'ng2-charts';
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    SignupComponent
+    SignupComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

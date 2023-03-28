@@ -29,7 +29,7 @@ export class SignupComponent {
         newUser.append('password',password);
         // console.log(formData);
         this.url = "http://localhost:5000/signup"
-       
+          
           this.http.post(this.url,newUser,{responseType:'json'}).subscribe({
             next:(res)=>{
               console.log(res);

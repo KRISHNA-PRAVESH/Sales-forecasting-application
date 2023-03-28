@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthGuard } from './auth/auth.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 const routes: Routes = [
   {
     path:'',
@@ -24,7 +25,13 @@ const routes: Routes = [
   {
     path:'signup',
     component:SignupComponent
+  },
+  // Wildcard route
+  {
+    path:'**',
+    component:PageNotFoundComponent
   }
+
 ];
 
 @NgModule({

@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit{
   file:any;
   periodicity:any;
   num:any;
-  url:any;
+  url:string = "http://localhost:5000"
   formData:any;
   dataset:any;
   
@@ -39,12 +39,19 @@ export class DashboardComponent implements OnInit{
   }
   
   async fetchDataset(){
-    this.url = "http://localhost:5000/dataset"
-    const response =  await fetch(this.url,{method:'GET'});
+
+    const response =  await fetch(`${this.url}/predict`,{method:'GET'});
     this.dataset = await response.json();
-    this.salesData = this.dataset.salesData; //if await was not used.. this would be initialised an undefined value. because the data
+    this.labels = this.dataset.labels; //if await was not used.. this would be initialised an undefined value. because the data
                                              //have not been fetched yet.
-    this.profitData = this.dataset.profitData; 
+    this.sales = this.dataset.sales; 
+  }
+
+  isValidForm(){
+    if(this.file && this.periodicity && this.num){
+      return true;
+    }
+    else  return false;
   }
  
   dataResponse:any;
@@ -52,15 +59,15 @@ export class DashboardComponent implements OnInit{
     this.periodicity = data.value.periodicity;
     this.num = data.value.number;
     // Send the post request only if the file exists
-    if(this.file && this.periodicity && this.num){
+    if(this.isValidForm()){
       this.formData = new FormData();
       this.formData.append("File",this.file);
       this.formData.append("periodicity",this.periodicity);
       this.formData.append("num",this.num);
       console.log(this.formData);
-      this.url = "http://localhost:5000/save"
+     
        // Sending the form data to the flask server running at port 5000 at the endpoint /save
-       this.http.post(this.url,this.formData,{responseType:'text'}).subscribe(res =>{
+       this.http.post(`${this.url}/save`,this.formData,{responseType:'text'}).subscribe(res =>{
        console.log(res)
     }); 
     }
@@ -98,6 +105,7 @@ export class DashboardComponent implements OnInit{
     
   }
   logout(){
+    this.http.get(`${this.url}/logout`).subscribe()
     this.snackBar.open("Logged Out","ok",{duration:1000,verticalPosition:'top',horizontalPosition:'right',panelClass:['red-snackbar']})
     this.authService.isLoggedIn = false;
     this.formData = null;
@@ -107,27 +115,25 @@ export class DashboardComponent implements OnInit{
 
   //Chart.js  
   public chart:any;
-  salesData:any;
-  profitData:any;
+  sales:any; 
+  labels:any;
   async createChart(){
+    if(this.isValidForm()){
     await this.fetchDataset(); //Waiting till the data is fetched from server
-    console.log(this.salesData);
+    console.log(this.labels)
+    console.log(this.sales);
     this.chart = new Chart("chart", {
       type: 'line', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
-	       datasets: [
-          {
-            label: "Sales",
-            data: this.salesData,
-            backgroundColor: 'red'
-          },
+      
+      data: {// values on X-Axis : Values on y axis will be automatically adjusted based on the values
+        labels:this.labels, 
+	       datasets: [  
+         
           {
             label: "Profit",
-            data: this.profitData,
-            backgroundColor: '#62CDFF'
+            data: this.sales,
+            borderColor:'green',
+            pointBackgroundColor:'black'
           }  
         ]
       },
@@ -137,6 +143,11 @@ export class DashboardComponent implements OnInit{
       
     });
   }
+  else{
+    this.snackBar.open("Please fill all the fields","ok",{duration:1000,verticalPosition:'top',horizontalPosition:'center',panelClass:['red-snackbar']})
+
+  }
+}
 
   
  
