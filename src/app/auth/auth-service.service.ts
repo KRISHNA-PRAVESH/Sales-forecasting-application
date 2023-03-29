@@ -10,10 +10,12 @@ export class AuthServiceService {
   url:any;
   isLoggedIn:boolean = false;
   response:any;
+  username:any;
   constructor(private http:HttpClient,private snackBar:MatSnackBar,private router:Router) { }
   authenticate(fdata:NgForm){
     let username:string = fdata.value.username;
     let password:string = fdata.value.password;
+    this.username = username
 
     const user = new FormData();
     user.append('username',username);
@@ -38,7 +40,7 @@ export class AuthServiceService {
           }
         },
         complete:()=>{
-          this.openSnackBarTop(`Hi, ${username}👋`,"",1000,"blue-snackbar");
+          this.openSnackBarTop(`Hi, ${username}👋`,"",2000,"blue-snackbar");
           this.router.navigate(['dashboard'])
         }
       })
@@ -46,6 +48,9 @@ export class AuthServiceService {
 
   isAuthenticated(){
     return this.isLoggedIn;
+  }
+  getUserName(){
+    return this.username
   }
 
    // Displaying the snack bar

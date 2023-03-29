@@ -1,46 +1,44 @@
-<div class="form-div">
-  <form class="form" action="" method="post" enctype="multipart/form-data" #data = 'ngForm' >
-    <div class="logout-btn">
-      
-      <button mat-mini-fab color="accent" (click)="logout()">
-        <mat-icon>power_settings_new</mat-icon>
-      </button>
-     </div>
-    <label for="csv">Upload your CSV File: </label> <br>
-      <input type="file" class="fileInput" ngModel name="csvFile" (change)="onFileSelected($event)" #upload>
-  
-    <div class="file-upload">
-     {{fileName || "No file uploaded yet."}}
-      <button mat-mini-fab color="primary" class="upload-btn"
-           (click)="upload.click()"> 
-           <mat-icon>attach_file</mat-icon>
-      </button>
-     </div>
-     
-     
-  
-      <label for="periodicity">Enter Periodicity:&nbsp;</label>
-      <input type="radio" value="months" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Months
-      <input type="radio" value="weeks" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Weeks
-      <input type="radio" value="days" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Days
-   
-    <br> <br>
-    <mat-form-field>
-      <mat-label>Enter Number of {{val}}</mat-label>
-      <input name="number" matInput ngModel required>
-    </mat-form-field>
-    <br>
-  
+<app-sidebar>
+
+</app-sidebar>
+<!--Main layout-->
+<div class="wrapper">
+  <div class="form-div">
+    <form class="form" action="" method="post" enctype="multipart/form-data" #data = 'ngForm' >
+     <div class="field">
+       <label for="csv">Upload your CSV File: </label> <br>
+        <input type="file" class="fileInput" ngModel name="csvFile" (change)="onFileSelected($event)" #upload>
+    
+       <div class="file-upload">
+       {{fileName || "No file uploaded yet."}}
+        <button mat-mini-fab color="primary" class="upload-btn"
+             (click)="upload.click()"> 
+             <mat-icon>attach_file</mat-icon>
+        </button>
+       </div>
+      </div>
+      <div class="field">
+        <label for="periodicity">Enter Periodicity:&nbsp;</label>
+        <input type="radio" value="months" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Months
+        <input type="radio" value="weeks" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Weeks
+        <input type="radio" value="days" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Days
+      </div>
+       
+       <div class="field">
+        <mat-form-field>
+          <mat-label>Enter Number of {{val}}</mat-label>
+          <input name="number" matInput ngModel required>
+        </mat-form-field>
+       
+      </div>
       <button mat-raised-button color="primary" type="submit" (click)="fetch(data)"> Submit </button>
-     
-      
-  </form>
+         
+    </form>
+    <a href="graph">
+      <button mat-raised-button >output</button>
+    </a>
+    
+  </div>
 </div>
-
-<button mat-raised-button color="warn" (click)="createChart()">show chart</button>
-<div style="display: block;height: 800px;width: 1200px;">
- <canvas id="chart">{{chart}}</canvas>
-</div>
-
 
 

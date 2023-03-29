@@ -14,6 +14,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule } from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 // for ng form
 import { FormsModule } from '@angular/forms';
@@ -21,6 +23,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
 import { NgChartsModule } from 'ng2-charts';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { GraphComponent } from './graph/graph.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
@@ -29,7 +33,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     LoginComponent,
     DashboardComponent,
     SignupComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    GraphComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -43,12 +49,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FormsModule,
     MatSnackBarModule,
     MatIconModule,
-    NgChartsModule
+    NgChartsModule,
+    MatSidenavModule,
+    MatListModule
     
 
    
   ],
-  providers: [LoginComponent],
+  providers: [LoginComponent,DashboardComponent,SidebarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
