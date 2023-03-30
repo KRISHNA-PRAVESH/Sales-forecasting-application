@@ -3,6 +3,8 @@ import { Chart } from 'chart.js';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { AuthServiceService } from '../auth/auth-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
+import { timeInterval } from 'rxjs';
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
@@ -11,14 +13,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class GraphComponent implements OnInit {
   dataset:any;
   username = ''
+  chartActive:boolean = false;
+  fetchable:boolean = false;
   url:string = "http://localhost:5000"
 
   constructor(private sideBarComp:SidebarComponent,
              private snackBar:MatSnackBar,
-             private authService:AuthServiceService){}
+             private authService:AuthServiceService,
+             private http:HttpClient){}
 
   ngOnInit(): void {
-   this.sideBarComp.username = this.authService.getUserName()
+    setTimeout(()=>{
+      this.fetchable = true;
+    },1000)
   }
   async fetchDataset(){
 
@@ -37,6 +44,7 @@ export class GraphComponent implements OnInit {
     await this.fetchDataset(); //Waiting till the data is fetched from server
     console.log(this.labels)
     console.log(this.sales);
+    this.chartActive = true;
     this.chart = new Chart("chart", {
       type: 'line', //this denotes tha type of chart
       
@@ -45,7 +53,7 @@ export class GraphComponent implements OnInit {
 	       datasets: [  
          
           {
-            label: "Profit",
+            label: "Sales",
             data: this.sales,
             borderColor:'green',
             pointBackgroundColor:'black'
@@ -61,6 +69,23 @@ export class GraphComponent implements OnInit {
 }
 destroyChart(){
   this.chart.destroy();
+  this.chartActive = false;
+}
+
+download(){
+  // The file will be returned in the form of blob(binary large object)
+  this.http.get(`${this.url}/get_csv`,{responseType:'blob'}).subscribe((res:Blob)=>{
+     const fileName = 'predictions.csv'; 
+      const a = document.createElement('a');
+      // Making the file downloadable
+      const objectUrl = URL.createObjectURL(res);
+      // console.log(res);
+      // console.log(objectUrl)
+      a.href = objectUrl;
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+  })
 }
 logout(){
   this.sideBarComp.logout()

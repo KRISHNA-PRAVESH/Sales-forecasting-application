@@ -16,6 +16,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 // for ng form
 import { FormsModule } from '@angular/forms';
@@ -25,7 +26,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { GraphComponent } from './graph/graph.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
+import { RouterLink,RouterLinkActive } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     MatIconModule,
     NgChartsModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    RouterLink,
+    RouterLinkActive,
+    MatProgressSpinnerModule
+
     
 
    

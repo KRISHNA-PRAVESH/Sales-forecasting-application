@@ -12,6 +12,8 @@ export class AuthServiceService {
   response:any;
   username:any;
   constructor(private http:HttpClient,private snackBar:MatSnackBar,private router:Router) { }
+
+  // Authenticate User
   authenticate(fdata:NgForm){
     let username:string = fdata.value.username;
     let password:string = fdata.value.password;
@@ -22,22 +24,20 @@ export class AuthServiceService {
     user.append('password',password);
 
     this.url = "http://localhost:5000/login"
-       
-      this.http.post(this.url,user,{responseType:'json'}).subscribe({
+
+    this.http.post(this.url,user,{responseType:'json'}).subscribe({
         next:(res)=>{
           console.log(res);
           this.isLoggedIn = true;
           console.log(this.isLoggedIn)
         },
+        // Server returns 401 error, for Incorrect password and User doesnot exist
         error:(err)=>{
+          
           // console.log(err.error)
           this.response = err.error;
-          if(this.response.statusCode==401){
-            this.openSnackBarCenter(this.response.responseMessage,"ok",1000,"red-snackbar")
-          }
-          else{
-            this.openSnackBarCenter(this.response.responseMessage,"ok",1000,"red-snackbar")
-          }
+          this.openSnackBarCenter(this.response.responseMessage,"ok",1000,"red-snackbar")
+          
         },
         complete:()=>{
           this.openSnackBarTop(`Hi, ${username}👋`,"",2000,"blue-snackbar");

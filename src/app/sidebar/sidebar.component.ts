@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthServiceService } from '../auth/auth-service.service';
 import { Router} from '@angular/router';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -19,7 +20,7 @@ export class SidebarComponent implements OnInit {
               private router:Router
 
   ){}
-  
+
   ngOnInit(): void {
     this.username = this.authService.getUserName()
   }

@@ -6,24 +6,28 @@
   <div class="form-div">
     <form class="form" action="" method="post" enctype="multipart/form-data" #data = 'ngForm' >
      <div class="field">
-       <label for="csv">Upload your CSV File: </label> <br>
+       <label for="csv">Upload your CSV File: </label> <br> <br>
         <input type="file" class="fileInput" ngModel name="csvFile" (change)="onFileSelected($event)" #upload>
-    
+        {{fileName || "No file uploaded yet."}}
+        <br>
        <div class="file-upload">
-       {{fileName || "No file uploaded yet."}}
-        <button mat-mini-fab color="primary" class="upload-btn"
-             (click)="upload.click()"> 
-             <mat-icon>attach_file</mat-icon>
-        </button>
+        <img src="./assets/img/file-upload-img.png" alt="" height="200px" (click)="upload.click()" >
+        
        </div>
       </div>
-      <div class="field">
-        <label for="periodicity">Enter Periodicity:&nbsp;</label>
-        <input type="radio" value="months" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Months
-        <input type="radio" value="weeks" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Weeks
-        <input type="radio" value="days" name="periodicity" ngModel (click)="onPeriodSelected($event)"> Days
-      </div>
-       
+      <br>
+       <div class="field">
+        <mat-form-field appearance="fill" >
+          <mat-label>Periodicity</mat-label>
+          <select matNativeControl required name="periodicity" ngModel (click)="onPeriodSelected($event)">
+            <option value="Months">Months</option>
+            <option value="Weeks">Weeks</option>
+            <option value="Days">Days</option>
+          </select>
+        </mat-form-field>
+  
+       </div>
+      
        <div class="field">
         <mat-form-field>
           <mat-label>Enter Number of {{val}}</mat-label>
@@ -31,12 +35,10 @@
         </mat-form-field>
        
       </div>
-      <button mat-raised-button color="primary" type="submit" (click)="fetch(data)"> Submit </button>
-         
+      <button mat-raised-button color="primary" type="submit" (click)="save(data)" class="btn"> Submit </button>
+      
     </form>
-    <a href="graph">
-      <button mat-raised-button >output</button>
-    </a>
+   
     
   </div>
 </div>

@@ -49,9 +49,11 @@ export class DashboardComponent implements OnInit{
   }
  
   dataResponse:any;
-  fetch(data:NgForm){
+  save(data:NgForm){
+    console.log(data.value)
     this.periodicity = data.value.periodicity;
     this.num = data.value.number;
+    console.log(this.periodicity)
     // Send the post request only if the file exists
     if(this.isValidForm()){
       this.formData = new FormData();
@@ -63,7 +65,9 @@ export class DashboardComponent implements OnInit{
        // Sending the form data to the flask server running at port 5000 at the endpoint /save
        this.http.post(`${this.url}/save`,this.formData,{responseType:'text'}).subscribe(res =>{
        console.log(res)
+       
     }); 
+    this.router.navigate(['graph'])
     }
     else{
       this.snackBar.open("Please fill all the fields","ok",{duration:1000,verticalPosition:'top',horizontalPosition:'center',panelClass:['red-snackbar']})

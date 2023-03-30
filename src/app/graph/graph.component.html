@@ -6,7 +6,7 @@
   </nav>
   <div class="d-flex flex-column flex-shrink-0 p-3 text-white side-bar">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <img src="./assets/img/forecast-image.jpeg" width="40px" height="40px"  alt="">&nbsp;
       <span class="fs-4">Sales Forecast</span>
     </a>
     <hr>
@@ -28,7 +28,7 @@
     <hr>
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="" alt="img" class="rounded-circle me-2" width="32" height="32">
+        <img src="./assets/img/user-icon.jpg" alt="img" class="rounded-circle me-2" width="32" height="32">
         <strong>{{username || 'User'}}</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -41,8 +41,12 @@
 
 <!-- Graph -->
 <div class="graph-wrapper">
-    <button mat-raised-button color="warn" (click)="createChart()">show chart</button>
-    <button mat-raised-button color="warn" (click)="destroyChart()"> Clear</button>
+    <mat-spinner *ngIf="!fetchable" class="spinner" [diameter]="50"></mat-spinner>
+
+    <button mat-raised-button color="primary" *ngIf="!chartActive && fetchable" (click)="createChart()" >show chart</button>
+    <button mat-raised-button color="warn" *ngIf="chartActive" (click)="destroyChart()"> Clear</button>
+    <button mat-raised-button color="primary" class="download-btn" *ngIf="fetchable && chartActive" (click)="download()">Download</button>
+    
     <div style="display: block;height: 800px;width: 1200px;">
      <canvas id="chart">{{chart}}</canvas>
     </div>

@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn:boolean = false;
   url:any;
   response:any;
+  hide:boolean = true;
   constructor(private router: Router,private snackBar: MatSnackBar, private http:HttpClient, private authService:AuthServiceService){
 
   }
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     
   }
-  hide = true;
+  
   authenticate(fdata: NgForm){
      this.authService.authenticate(fdata);
    
