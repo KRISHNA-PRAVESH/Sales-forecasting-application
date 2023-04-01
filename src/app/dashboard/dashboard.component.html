@@ -3,7 +3,8 @@
 </app-sidebar>
 <!--Main layout-->
 <div class="wrapper">
-  <div class="form-div">
+  <mat-spinner *ngIf="!fetchable" class="spinner" [diameter]="50"></mat-spinner>
+  <div class="form-div" *ngIf="fetchable">
     <form class="form" action="" method="post" enctype="multipart/form-data" #data = 'ngForm' >
      <div class="field">
        <label for="csv">Upload your CSV File: </label> <br> <br>

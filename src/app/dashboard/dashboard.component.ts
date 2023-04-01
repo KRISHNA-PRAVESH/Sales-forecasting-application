@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit{
   num:any;
   url:string = "http://localhost:5000"
   formData:any;
- 
+  fetchable:boolean = false
   
   
  
@@ -36,7 +36,9 @@ export class DashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-     
+    setTimeout(()=>{
+      this.fetchable = true;
+    },1000)
   }
   
  
