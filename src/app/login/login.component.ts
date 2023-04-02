@@ -36,7 +36,15 @@ export class LoginComponent implements OnInit {
   }
   
   authenticate(fdata: NgForm){
-     this.authService.authenticate(fdata);
+    let username:string = fdata.value.username;
+    let password:string = fdata.value.password;
+    if(username && password){
+      this.authService.authenticate(fdata);
+    }
+    else{
+      this.openSnackBarCenter("Please fill all the fields","Ok",1000,'red-snackbar')
+    }
+     
    
 }
 }

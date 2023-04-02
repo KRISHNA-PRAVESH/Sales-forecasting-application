@@ -27,13 +27,13 @@ export class GraphComponent implements OnInit {
       this.fetchable = true;
     },1000)
   }
-  async fetchDataset(){
-
-    const response =  await fetch(`${this.url}/predict`,{method:'GET'});
-    this.dataset = await response.json();
-    this.labels = this.dataset.labels; //if await was not used.. this would be initialised an undefined value. because the data
-                                             //have not been fetched yet.
-    this.sales = this.dataset.sales; 
+  async fetchDataset(endpoint:string){
+    const response =  await fetch(`${this.url}/${endpoint}`,{method:'GET'});
+    let res = await response.json();
+    return res
+    // this.labels = this.dataset.labels; //if await was not used.. this would be initialised an undefined value. because the data
+    //                                          //have not been fetched yet.
+    // this.sales = this.dataset.sales; 
   }
 
   //Chart.js  
@@ -41,8 +41,9 @@ export class GraphComponent implements OnInit {
   sales:any; 
   labels:any;
   async createChart(){  
-    await this.fetchDataset(); //Waiting till the data is fetched from server
-    console.log(this.labels)
+    this.dataset =  await this.fetchDataset('predict'); //Waiting till the data is fetched from server
+    this.labels = this.dataset.labels
+    this.sales = this.dataset.sales
     console.log(this.sales);
     this.chartActive = true;
     this.chart = new Chart("chart", {
@@ -66,7 +67,42 @@ export class GraphComponent implements OnInit {
       
     });
  
-}
+  }
+  async testSet(){
+    this.dataset = await this.fetchDataset('test_set'); //Waiting till the data is fetched from server
+    this.labels = this.dataset.labels
+    this.sales = this.dataset.predicted
+    let actual = this.dataset.actual
+    console.log(this.sales);
+    this.chartActive = true;
+    this.chart = new Chart("chart", {
+      type: 'line', //this denotes tha type of chart
+      
+      data: {// values on X-Axis : Values on y axis will be automatically adjusted based on the values
+        labels:this.labels, 
+	       datasets: [  
+         
+          {
+            label: "Predicted",
+            data: this.sales,
+            borderColor:'green',
+            pointBackgroundColor:'black'
+          } ,
+          {
+            label:"Actual",
+            data:actual,
+            borderColor:'blue',
+            pointBackgroundColor:'black'
+          }
+        ]
+      },
+      options: {
+        aspectRatio:2.5
+      }
+      
+    });
+ 
+   }
 destroyChart(){
   this.chart.destroy();
   this.chartActive = false;
