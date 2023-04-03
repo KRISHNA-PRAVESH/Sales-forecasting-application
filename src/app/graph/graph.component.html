@@ -49,6 +49,15 @@
     
     <div style="display: block;height: 800px;width: 1200px;">
      <canvas id="chart">{{chart}}</canvas>
+     <div class="metrics" *ngIf="chartActive">
+      <ul>
+        <li><b> MSE:</b> &nbsp;{{ mse || ''}}</li>
+        <li><b>RMSE:</b> {{ rmse || ''}}</li>
+        <li><b>MAE:</b> {{mae || ''}}</li>
+      </ul>
     </div>
+    </div>
+    
+     
 </div>
- 
+

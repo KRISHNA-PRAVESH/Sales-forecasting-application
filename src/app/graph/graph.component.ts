@@ -15,6 +15,9 @@ export class GraphComponent implements OnInit {
   username = ''
   chartActive:boolean = false;
   fetchable:boolean = false;
+  mse:any;
+  rmse:any;
+  mae:any
   url:string = "http://localhost:5000"
 
   constructor(private sideBarComp:SidebarComponent,
@@ -73,6 +76,12 @@ export class GraphComponent implements OnInit {
     this.labels = this.dataset.labels
     this.sales = this.dataset.predicted
     let actual = this.dataset.actual
+    this.mae = this.dataset.mae;
+    this.mse = this.dataset.mse;
+    this.rmse = this.dataset.rmse;
+    console.log(this.mae);
+    console.log(this.mse);
+    console.log(this.rmse)
     console.log(this.sales);
     this.chartActive = true;
     this.chart = new Chart("chart", {
@@ -85,13 +94,14 @@ export class GraphComponent implements OnInit {
           {
             label: "Predicted",
             data: this.sales,
-            borderColor:'green',
+            
+            borderColor:'#FFB84C',
             pointBackgroundColor:'black'
           } ,
           {
             label:"Actual",
             data:actual,
-            borderColor:'blue',
+            borderColor:'#19A7CE',
             pointBackgroundColor:'black'
           }
         ]
@@ -111,7 +121,7 @@ destroyChart(){
 download(){
   // The file will be returned in the form of blob(binary large object)
   this.http.get(`${this.url}/get_csv`,{responseType:'blob'}).subscribe((res:Blob)=>{
-     const fileName = 'predictions.csv'; 
+     const fileName = 'output.zip'; 
       const a = document.createElement('a');
       // Making the file downloadable
       const objectUrl = URL.createObjectURL(res);
